@@ -1,0 +1,63 @@
+﻿<h3>Money conv</h3>
+
+<div class="form-group">
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Dollar</label>
+            <input type="number" class="form-control" placeholder="$" @bind="USD" @bind:event="oninput" />
+            <label>Exchange rate</label>
+            <input type="number" class="form-control" placeholder="Exchange rate" @bind="ExchangeRate" @bind:event="oninput" />
+        </div>
+
+        <div class="row blockquote mt-5">
+            @if (Pln != null)
+            {
+
+                <span>@USD $ equal to @Pln PLN!</span>
+
+            }
+            else
+            {
+                <span>Type dollars and rate</span>
+            }
+        </div>
+
+
+        </div>
+</div>
+
+@code {
+    private double? _exchangeRate = 3.96;
+    public double? ExchangeRate
+    {
+        get => _exchangeRate;
+        set
+        {
+            _exchangeRate = value;
+            ConvertToPln();
+        }
+    }
+
+    private double? _usd = null;
+    public double? USD
+    {
+        get => _usd;
+        set
+        {
+            _usd = value;
+            ConvertToPln();
+        }
+    }
+
+    private double? _pln = null;
+    public double? Pln
+    {
+        get => _pln;
+    }
+
+    private void ConvertToPln()
+    {
+        _pln = _usd * _exchangeRate;
+    }
+}

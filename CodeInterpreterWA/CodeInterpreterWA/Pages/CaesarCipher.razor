@@ -1,0 +1,58 @@
+﻿@page "/caesarcipher"
+
+<h3>CaesarCipher</h3>
+
+<div class="row" style="height: 600px;">
+    <div class="col-6 h-100">
+        <label>Shift: </label>
+        <input type="number" class="form-control" placeholder="Shift ..." @bind="Shift" @bind:event="oninput" />
+        <label>Text</label>
+        <textarea @bind="Text" @bind:event="oninput" class="form-control h-75"></textarea>
+    </div>
+    <div class="col-6 h-100">
+        <label>Encrypted Text</label>
+        <textarea class="form-control h-100">@CipherOut</textarea>
+    </div>
+
+</div>
+
+@code {
+    string _text = string.Empty;
+    public string Text
+    {
+        get => _text;
+        set
+        {
+            _text = value;
+            Encrypt();
+        }
+    }
+
+    int _shift = 3;
+    public int Shift
+    {
+        get => _shift;
+        set
+        {
+            _shift = value;
+            Encrypt();
+        }
+    }
+
+    string _ciperOut = string.Empty;
+    public string CipherOut
+    {
+        get => _ciperOut;
+    }
+
+    private void Encrypt()
+    {
+        _ciperOut = string.Empty;
+        foreach (var item in _text.ToUpper())
+        {
+            var foo = item + _shift - 'A';
+            _ciperOut += (char)((foo % 26) + 'A');
+        }
+    }
+
+}

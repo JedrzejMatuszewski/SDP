@@ -1,0 +1,45 @@
+﻿@page "/todo"
+
+<h3>Todo</h3>
+
+<div class="col-md-4 mb-3">
+    <input class="form-control" placeholder="Todo item" @bind="todo" />
+    <button class="btn btn-primary mt-1" @onclick="Add">Add</button>
+</div>
+
+
+@foreach (var todo in todos)
+{
+    <li class="list-group-item">
+    @todo.Tite
+        <div class="float-right custom-control custom-checkbox">
+            <input type="checkbox" class="form-check-input" id="doneCheckBox" @bind="todo.IsDone" />
+            <label class="form-check-label" for="doneCheckBox">Done</label>
+        </div>
+    </li>
+}
+
+@code {
+    private IList<ToDoItemModel> todos = new List<ToDoItemModel>
+    {
+        new ToDoItemModel
+        {
+            IsDone = false,
+            Tite = "Nauczyc sie Blazor",
+        },
+        new ToDoItemModel
+        {
+            IsDone = true,
+            Tite = "Nauczyc sie przelicznik $ na PLN",
+        },
+    };
+
+
+    private string todo;
+
+    private void Add()
+    {
+        todos.Add(new ToDoItemModel { Tite = todo });
+        todo = string.Empty;
+    }
+}
